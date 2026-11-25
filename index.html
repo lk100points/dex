@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+  <meta name="theme-color" content="#090c10">
+  <meta name="description" content="WHITE NOISE — a winter psychological thriller, Maine, 2004.">
+  <title>WHITE NOISE — Winter, 2004</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="stylesheet" href="./src/style.css">
+</head>
+<body>
+  <div id="game-shell">
+    <canvas id="game-canvas" aria-label="WHITE NOISE 3D game"></canvas>
+    <div id="film-grain" aria-hidden="true"></div>
+    <div id="vignette" aria-hidden="true"></div>
+
+    <section id="boot-screen" class="boot-screen">
+      <div class="boot-card">
+        <div class="boot-mark">WN<span> / 04</span></div>
+        <div class="boot-title">WHITE NOISE</div>
+        <div class="boot-sub">A WINTER STORY · NORTHERN MAINE</div>
+        <div class="boot-track"><i></i></div>
+        <div id="boot-message">INITIALIZING THE QUIET…</div>
+      </div>
+    </section>
+
+    <main id="main-menu" class="screen hidden">
+      <div class="menu-left">
+        <div class="eyebrow"><span class="eyebrow-dot"></span> ARCHIVE TAPE 04 · DECEMBER 2004</div>
+        <h1 class="logo-title">WHITE<br><em>NOISE</em></h1>
+        <div class="logo-rule"></div>
+        <p class="tagline">THE WEATHER HAS BEEN QUIET<br>FOR THREE DAYS.</p>
+        <div class="menu-actions">
+          <button id="btn-new" class="menu-button primary"><span>01</span> BEGIN AGAIN <b>↗</b></button>
+          <button id="btn-continue" class="menu-button"><span>02</span> CONTINUE <b>↗</b></button>
+          <button id="btn-settings" class="menu-button"><span>03</span> SETTINGS <b>↗</b></button>
+          <button id="btn-controls" class="menu-button"><span>04</span> CONTROLS <b>↗</b></button>
+          <button id="btn-credits" class="menu-button"><span>05</span> CREDITS <b>↗</b></button>
+        </div>
+        <div class="menu-footer"><span>© 2004 · RANGER STATION 06</span><span>BUILD 0.4.12 / WINTER</span></div>
+      </div>
+      <div class="menu-right">
+        <div class="menu-location">PENOBSCOT COUNTY, MAINE <span>44° 48′ N / 68° 46′ W</span></div>
+        <div class="menu-note">THE COAST ROAD IS CLOSED.<br>THE RADIO IS STILL ON.</div>
+        <div class="menu-coordinates">NOAA WEATHER LOG / 18:42 EST<br>WIND NW 14 MPH · VISIBILITY 0.4 MI</div>
+      </div>
+    </main>
+
+    <section id="intro-screen" class="intro-screen hidden"><div class="intro-meta">RANGER STATION 06 / FIELD JOURNAL</div><div id="intro-line" class="intro-line">DECEMBER 14, 2004 — 18:42 EST</div><button id="intro-skip" class="intro-skip">SKIP INTRO ↗</button></section>
+
+    <section id="settings-screen" class="panel-screen hidden">
+      <div class="panel-card">
+        <div class="panel-top"><div><div class="eyebrow">PREFERENCES / 04</div><h2>SETTINGS</h2></div><button class="close-button" data-close="settings">×</button></div>
+        <label class="setting-row"><span>MASTER VOLUME <small>AMBIENCE & EFFECTS</small></span><input id="volume-range" type="range" min="0" max="100" value="70"><b id="volume-value">70</b></label>
+        <label class="setting-row"><span>MOUSE SENSITIVITY <small>LOOK SPEED</small></span><input id="sensitivity-range" type="range" min="20" max="160" value="75"><b id="sensitivity-value">75</b></label>
+        <label class="setting-row"><span>DISPLAY QUALITY <small>LOWER IF FRAME RATE DROPS</small></span><select id="quality-select"><option value="low">LOW / PERFORMANCE</option><option value="medium" selected>MEDIUM / BALANCED</option><option value="high">HIGH / DETAIL</option></select></label>
+        <label class="setting-row"><span>FILM GRAIN <small>SUBTLE ANALOG TEXTURE</small></span><input id="grain-range" type="range" min="0" max="100" value="28"><b id="grain-value">28</b></label>
+        <div class="panel-footnote">CHANGES ARE SAVED AUTOMATICALLY.</div>
+      </div>
+    </section>
+
+    <section id="controls-screen" class="panel-screen hidden">
+      <div class="panel-card">
+        <div class="panel-top"><div><div class="eyebrow">FIELD MANUAL / 04</div><h2>CONTROLS</h2></div><button class="close-button" data-close="controls">×</button></div>
+        <div class="control-grid rebind-grid">
+          <button class="bind-button" data-bind="forward"><span>MOVE FORWARD</span><kbd id="bind-forward">W</kbd></button>
+          <button class="bind-button" data-bind="backward"><span>MOVE BACKWARD</span><kbd id="bind-backward">S</kbd></button>
+          <button class="bind-button" data-bind="left"><span>MOVE LEFT</span><kbd id="bind-left">A</kbd></button>
+          <button class="bind-button" data-bind="right"><span>MOVE RIGHT</span><kbd id="bind-right">D</kbd></button>
+          <button class="bind-button" data-bind="interact"><span>INTERACT / INSPECT</span><kbd id="bind-interact">E</kbd></button>
+          <button class="bind-button" data-bind="lantern"><span>TOGGLE LANTERN</span><kbd id="bind-lantern">F</kbd></button>
+          <button class="bind-button" data-bind="run"><span>WALK QUICKLY</span><kbd id="bind-run">SHIFT</kbd></button>
+          <div class="bind-static"><kbd>MOUSE</kbd><span>LOOK AROUND</span></div>
+          <div class="bind-static"><kbd>ESC</kbd><span>PAUSE / RELEASE CURSOR</span></div>
+        </div>
+        <div id="rebind-message" class="panel-footnote">SELECT A KEY TO REASSIGN IT. PRESS ESC TO CANCEL.</div>
+        <div class="panel-footnote">ON TOUCHSCREENS: HOLD THE LEFT PAD TO MOVE, DRAG THE RIGHT SIDE TO LOOK. USE THE BUTTONS AT THE BOTTOM RIGHT.</div>
+      </div>
+    </section>
+
+    <section id="credits-screen" class="panel-screen hidden">
+      <div class="panel-card narrow">
+        <div class="panel-top"><div><div class="eyebrow">END CREDITS / 04</div><h2>WHITE NOISE</h2></div><button class="close-button" data-close="credits">×</button></div>
+        <p class="credits-copy">A small winter story about the things that stay after the radio goes quiet.</p>
+        <div class="credit-row"><span>WORLD & STORY</span><b>RANGER STATION 06</b></div>
+        <div class="credit-row"><span>ORIGINAL AMBIENCE</span><b>WHITE NOISE SOUND DEPARTMENT</b></div>
+        <div class="credit-row"><span>LOCATION</span><b>NORTHERN MAINE, 2004</b></div>
+        <div class="panel-footnote">ALL AUDIO IN THIS BUILD IS ORIGINAL OR PROCEDURALLY GENERATED.</div>
+      </div>
+    </section>
+
+    <section id="pause-screen" class="panel-screen hidden">
+      <div class="panel-card narrow">
+        <div class="eyebrow">FIELD RECORDING PAUSED</div><h2>TAKE A BREATH.</h2>
+        <p class="credits-copy">The wind hasn't stopped.</p>
+        <button id="btn-resume" class="menu-button primary"><span>01</span> RETURN TO THE CABIN <b>↗</b></button>
+        <button id="btn-pause-settings" class="menu-button"><span>02</span> SETTINGS <b>↗</b></button>
+        <button id="btn-quit" class="menu-button"><span>03</span> MAIN MENU <b>↗</b></button>
+      </div>
+    </section>
+
+    <section id="radio-screen" class="radio-screen hidden">
+      <div class="radio-card">
+        <div class="radio-head"><div><span class="eyebrow">SHORTWAVE RECEIVER / 1978</span><h3>FREQUENCY DIAL</h3></div><button id="radio-close" class="close-button">×</button></div>
+        <div class="radio-frequency"><span id="radio-frequency-value">89.7</span><small>MHz</small></div>
+        <input id="radio-range" type="range" min="880" max="1080" value="897">
+        <div class="radio-scale"><span>88.0</span><span>98.0</span><span>108.0</span></div>
+        <p id="radio-status">JUST STATIC. TURN THE DIAL SLOWLY.</p>
+        <div class="radio-actions"><button id="radio-minus">−</button><button id="radio-plus">+</button><button id="radio-lock" class="radio-lock">LISTEN</button></div>
+      </div>
+    </section>
+
+    <section id="ending-screen" class="ending-screen hidden">
+      <div class="ending-content"><div class="eyebrow">SIDE A / END OF RECORDING</div><h2>THE QUIET<br><em>REMAINS.</em></h2><p id="ending-copy">Somewhere below the cliff, something answers the radio.</p><button id="btn-ending-menu" class="menu-button primary"><span>01</span> RETURN TO TITLE <b>↗</b></button></div>
+    </section>
+
+    <div id="game-hud" class="game-hud hidden">
+      <div class="hud-top"><div class="objective-card"><div class="hud-label"><span class="status-dot"></span> CURRENT THOUGHT</div><div id="objective-text">CHECK THE RADIO</div><div id="objective-sub">The receiver is already warm.</div></div><div class="hud-time"><span id="time-text">18:42</span><small>EST · DEC 14, 2004</small></div></div>
+      <div class="hud-bottom"><div class="location-card"><span id="location-name">RANGER CABIN 06</span><small id="location-detail">PENOBSCOT COUNTY, ME</small></div><div id="interaction-prompt" class="interaction-prompt hidden"><kbd>E</kbd><span id="prompt-text">INSPECT RADIO</span></div><div id="message-toast" class="message-toast"></div></div>
+      <div id="crosshair" class="crosshair"><i></i><b></b></div>
+    </div>
+
+    <div id="mobile-ui" class="mobile-ui hidden">
+      <div id="touch-stick" class="touch-stick"><div class="stick-ring"></div><div id="stick-knob" class="stick-knob"></div></div>
+      <div id="touch-look-hint">DRAG TO LOOK</div>
+      <div class="mobile-actions"><button id="mobile-lantern" class="touch-action">LAMP</button><button id="mobile-use" class="touch-action use">USE</button><button id="mobile-run" class="touch-action">RUN</button></div>
+    </div>
+
+    <div id="orientation-warning" class="orientation-warning hidden"><div class="rotate-symbol">↻</div><b>TURN YOUR DEVICE</b><span>WHITE NOISE IS BEST PLAYED IN LANDSCAPE.</span></div>
+    <div id="fatal-screen" class="fatal-screen hidden"><div class="eyebrow">THE SIGNAL COULD NOT BE FOUND</div><h2>WHITE NOISE</h2><p id="fatal-message">The 3D engine could not be loaded. Check your internet connection and refresh.</p><button id="fatal-retry" class="menu-button primary"><span>↻</span> TRY AGAIN</button></div>
+  </div>
+
+  <script type="module">
+    const bootMessage = document.getElementById('boot-message');
+    const fatal = document.getElementById('fatal-screen');
+    const fatalMessage = document.getElementById('fatal-message');
+    const boot = document.getElementById('boot-screen');
+    async function loadThree() {
+      const sources = [
+        'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js',
+        'https://unpkg.com/three@0.160.0/build/three.module.js'
+      ];
+      let lastError;
+      for (const url of sources) {
+        try { return await import(url); }
+        catch (error) { lastError = error; }
+      }
+      throw lastError || new Error('Unable to load Three.js');
+    }
+    async function launch() {
+      try {
+        bootMessage.textContent = 'LOADING THE CABIN…';
+        const THREE = await loadThree();
+        const module = await import('./src/game.js');
+        module.startGame(THREE);
+        boot.classList.add('hidden');
+      } catch (error) {
+        console.error(error);
+        boot.classList.add('hidden');
+        fatalMessage.textContent = 'Could not load the 3D engine or game files. Open the page with an internet connection and make sure the complete ZIP was uploaded (index.html, src/, assets/). ' + (error?.message || '');
+        fatal.classList.remove('hidden');
+      }
+    }
+    document.getElementById('fatal-retry').addEventListener('click', () => location.reload());
+    launch();
+  </script>
+</body>
+</html>
